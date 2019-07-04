@@ -1,5 +1,0 @@
-def check_registration_rules(*args):
-    args[0]
-    
-    pass
-
