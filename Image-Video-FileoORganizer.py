@@ -39,11 +39,12 @@ def filefulllist(_path):
     return temp
 
 
-
+#get the source and destination folder
 import sys
 src=sys.argv[1]
 dist=sys.argv[2]
 
+# check if there is not directory create a new one
 if not os.path.isdir(dist):
     os.mkdir(dist)
     pass
