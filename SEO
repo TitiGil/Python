@@ -1,0 +1,73 @@
+headers=["Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML like Gecko) Chrome/44.0.2403.155 Safari/537.36",
+'Mozilla/5.0 (X11; Ubuntu; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2919.83 Safari/537.36',
+'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',
+'Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1',
+'Mozilla/5.0 (X11; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1',
+'Mozilla/5.0 (X11; Linux i686; rv:2.0b6pre) Gecko/20100907 Firefox/4.0b6pre Fennec/2.0b1pre',
+'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1',
+'Mozilla/5.0 (Windows NT 6.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1',
+'Mozilla/5.0 (WindowsCE 6.0; rv:2.0.1) Gecko/20100101 Firefox/4.0.1',
+]
+
+
+query=['باربری+ظریب+بار+تهران',
+'اسباب+کشی+تهران+ظریب',
+'باربری+تهران',
+'باربری+ظریب+بار',
+'ظریب+بار+تهران',
+'اسباب کشی+تهران']
+
+
+import re
+import requests
+import random
+
+from fake_useragent import UserAgent
+
+ua=UserAgent()
+
+while True:
+    url="https://www.google.com/search?q="+query[random.randrange(0, len(query))]
+
+    try:
+        
+        header={'User-Agent':ua.random}
+
+    except:
+        header={'User-Agent': header[random.randrange(0,len(a))]}
+
+    print('url: '+url)
+    print('header: '+header['User-Agent'])
+
+    page=requests.get(url,headers=header)
+    print(' page requsting completed !')
+
+    from bs4 import BeautifulSoup
+
+
+    soup = BeautifulSoup(page.text, 'html.parser')
+    result=soup.find_all("a", {"href" : re.compile("zaribbar.ir")})
+
+    if len(result)!=0:
+        url="https://google.com"+result[0]['href']
+        print( "query url ==="+url)
+        page=requests.get(url)
+        print("page loading completed !!")
+    else:
+        try:
+            from googlesearch import search
+        except ImportError:
+            print("No module named 'google' found")
+    
+    # to search
+        
+    
+        for j in search(query[random.randrange(0, len(query))], tld="com", num=30, stop=30, pause=2):
+            print(j)
+
+    import time 
+    time.sleep(random.randrange(10,100))
+    print("finish")  
+      
+
+
