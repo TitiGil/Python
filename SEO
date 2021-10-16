@@ -66,8 +66,10 @@ while True:
             print(j)
 
     import time 
-    time.sleep(random.randrange(10,100))
-    print("finish")  
+    t=random.randrange(10,100)
+    print("sleep for : %3d Sec" %(t))
+    time.sleep(t)
+    print("finish")    
       
 
 
