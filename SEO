@@ -21,7 +21,9 @@ query=['باربری+ظریب+بار+تهران',
 import re
 import requests
 import random
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 from fake_useragent import UserAgent
 
 ua=UserAgent()
@@ -39,7 +41,10 @@ while True:
     print('url: '+url)
     print('header: '+header['User-Agent'])
 
-    page=requests.get(url,headers=header)
+    try:
+        page=requests.get(url)
+    except:
+        page=requests.get(url,headers=header, verify=False)
     print(' page requsting completed !')
 
     from bs4 import BeautifulSoup
@@ -51,7 +56,10 @@ while True:
     if len(result)!=0:
         url="https://google.com"+result[0]['href']
         print( "query url ==="+url)
-        page=requests.get(url)
+        try:
+            page=requests.get(url)
+        except:
+            page=requests.get(url,headers=header, verify=False)
         print("page loading completed !!")
     else:
         try:
@@ -62,14 +70,13 @@ while True:
     # to search
         
     
-        for j in search(query[random.randrange(0, len(query))], tld="com", num=30, stop=30, pause=2):
-            print(j)
+        #for j in search(query[random.randrange(0, len(query))], tld="com", num=30, stop=30, pause=2):
+        print("not succeed")
 
     import time 
-    t=random.randrange(10,100)
+    t=random.randrange(10,1000)
     print("sleep for : %3d Sec" %(t))
     time.sleep(t)
     print("finish")    
       
-
 
